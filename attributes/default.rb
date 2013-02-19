@@ -17,6 +17,11 @@ node.default["liferay"]["tomcat"]["defaults"] = {
 'JAVA_OPTS' => '"-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m -Dexternal-properties=/var/lib/liferay/portal-ext.properties"'
 }
 
+node.default["liferay"]["nginx_site"]["server_name"] = "localhost"
+node.default["liferay"]["nginx_site"]["ssl_certificate"] = "/etc/ssl/private/liferay.pem"
+node.default["liferay"]["nginx_site"]["ssl_certificate_key"] = "/etc/ssl/private/liferay.key"
+node.default["liferay"]["nginx_site"]["proxy_pass"] = "http://localhost:8080"
+
 node.default["liferay"]["portalExtProperties"] = {
 'liferay.home' => '/var/lib/liferay',
 

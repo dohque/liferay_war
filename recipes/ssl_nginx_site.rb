@@ -18,4 +18,8 @@ template "/etc/nginx/sites-available/ssl_liferay" do
   notifies :reload, "service[nginx]", :delayed  
 end
 
+execute "nxensite ssl_liferay" do
+  not_if { ::File.exists?("/etc/nginx/sites-enabled/ssl_liferay") }
+  notifies :restart, "service[nginx]", :delayed
+end
 

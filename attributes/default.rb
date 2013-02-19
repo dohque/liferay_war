@@ -18,7 +18,7 @@ node.default["liferay"]["tomcat"]["defaults"] = {
 }
 
 node.default["liferay"]["nginx_site"]["server_name"] = "localhost"
-node.default["liferay"]["nginx_site"]["ssl_certificate"] = "/etc/ssl/private/liferay.pem"
+node.default["liferay"]["nginx_site"]["ssl_certificate"] = "/etc/ssl/private/liferay.crt"
 node.default["liferay"]["nginx_site"]["ssl_certificate_key"] = "/etc/ssl/private/liferay.key"
 node.default["liferay"]["nginx_site"]["proxy_pass"] = "http://localhost:8080"
 

@@ -33,7 +33,7 @@ node.default["liferay"]["portalExtProperties"] = {
 'jdbc.default.username' => node.liferay.db_user,
 'jdbc.default.password' => node.liferay.db_password,
 
-'dl.file.max.size' => 10240000,
+'dl.file.max.size' => 20480000,
 
 # Session timeout
 'session.timeout' => 60,

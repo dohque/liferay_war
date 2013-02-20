@@ -14,7 +14,7 @@ node.default["liferay"]["bundle"] = 'http://sourceforge.net/projects/lportal/fil
 node.default["liferay"]["tomcat"]["defaults"] = {
 'TOMCAT7_USER' => 'tomcat7',
 'TOMCAT7_GROUP' => 'tomcat7',
-'JAVA_OPTS' => '"-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m -Dexternal-properties=/var/lib/liferay/portal-ext.properties"'
+'JAVA_OPTS' => '"-Djava.awt.headless=true -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dexternal-properties=/var/lib/liferay/portal-ext.properties -Xmx1536m -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"'
 }
 
 node.default["liferay"]["nginx_site"] = {

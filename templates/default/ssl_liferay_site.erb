@@ -8,7 +8,7 @@ server {
 server {
     listen   443;
     server_name <%= @site[:server_name] %>;
-    client_max_body_size 10M;
+    client_max_body_size <%= @site[:client_max_body_size] %>;
 
     ssl                 on;
     ssl_certificate     <%= @site[:ssl_certificate] %>;

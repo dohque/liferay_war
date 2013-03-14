@@ -50,9 +50,9 @@ directory "/var/lib/liferay" do
 end
 
 directory "/var/lib/tomcat7/webapps/ROOT" do
-    owner 'tomcat7'
-    group 'tomcat7'
-    action :create
+    action :delete
+    recursive true
+    not_if { File.exists?("/var/lib/tomcat7/webapps/ROOT.war") }
 end
 
 remote_file "/var/lib/tomcat7/webapps/ROOT.war" do
@@ -92,7 +92,8 @@ end
 
 template "/var/lib/liferay/portal-ext.properties" do
     source "properties.erb"
-    owner "root"
+    owner "tomcat7"
+    group "tomcat7"
     variables(
         :properties => node.liferay.portalExtProperties
     )
@@ -101,7 +102,8 @@ end
 
 template "/var/lib/liferay/system-ext.properties" do
     source "properties.erb"
-    owner "root"
+    owner "tomcat7"
+    group "tomcat7"
     variables(
         :properties => node.liferay.systemExtProperties
     )

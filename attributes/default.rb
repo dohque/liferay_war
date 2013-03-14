@@ -5,7 +5,7 @@
 node.default["liferay"]["db_user"] = "liferay"
 node.default["liferay"]["db_password"] = "liferay"
 node.default["liferay"]["db_name"] = "liferay"
-node.default["liferay"]["db_host"] = node.mysql.bind_address
+node.default["liferay"]["db_host"] = attribute?('cloud') ? cloud['local_ipv4'] : ipaddress
 
 node.default["liferay"]["deps"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-dependencies-6.1.1-ce-ga2-20120731132656558.zip'
 node.default["liferay"]["war"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-6.1.1-ce-ga2-20120731132656558.war'

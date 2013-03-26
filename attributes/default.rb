@@ -7,6 +7,8 @@ node.default["liferay"]["db_password"] = "liferay"
 node.default["liferay"]["db_name"] = "liferay"
 node.default["liferay"]["db_host"] = attribute?('cloud') ? cloud['local_ipv4'] : ipaddress
 
+node.default["liferay"]["home"] = "/var/lib/liferay"
+
 node.default["liferay"]["deps"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-dependencies-6.1.1-ce-ga2-20120731132656558.zip'
 node.default["liferay"]["war"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-6.1.1-ce-ga2-20120731132656558.war'
 node.default["liferay"]["bundle"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip'
@@ -14,7 +16,7 @@ node.default["liferay"]["bundle"] = 'http://sourceforge.net/projects/lportal/fil
 node.default["liferay"]["tomcat"]["defaults"] = {
 'TOMCAT7_USER' => 'tomcat7',
 'TOMCAT7_GROUP' => 'tomcat7',
-'JAVA_OPTS' => '"-Djava.awt.headless=true -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dexternal-properties=/var/lib/liferay/portal-ext.properties -Xmx1536m -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"'
+'JAVA_OPTS' => "\"-Djava.awt.headless=true -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dexternal-properties=#{node.liferay.home}/portal-ext.properties -Xmx1536m -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled\""
 }
 
 node.default["liferay"]["nginx_site"] = {
@@ -26,7 +28,7 @@ node.default["liferay"]["nginx_site"] = {
 }
 
 node.default["liferay"]["portalExtProperties"] = {
-'liferay.home' => '/var/lib/liferay',
+'liferay.home' => node.liferay.home,
 
 'jdbc.default.driverClassName' => 'com.mysql.jdbc.Driver',
 'jdbc.default.url' => "jdbc:mysql://#{node.liferay.db_host}/#{node.liferay.db_name}?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false",

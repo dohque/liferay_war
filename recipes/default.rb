@@ -44,7 +44,7 @@ template "/etc/default/tomcat7" do
     notifies :restart, "service[tomcat7]", :delayed
 end
 
-directory "/var/lib/liferay" do
+directory node.liferay.home do
    owner 'tomcat7'
    group 'tomcat7'
 end
@@ -90,7 +90,7 @@ mysql_database_user node.liferay.db_user  do
     action :grant
 end
 
-template "/var/lib/liferay/portal-ext.properties" do
+template "#{node.liferay.home}/portal-ext.properties" do
     source "properties.erb"
     owner "tomcat7"
     group "tomcat7"
@@ -100,7 +100,7 @@ template "/var/lib/liferay/portal-ext.properties" do
     notifies :restart, "service[tomcat7]", :delayed
 end
 
-template "/var/lib/liferay/system-ext.properties" do
+template "#{node.liferay.home}/system-ext.properties" do
     source "properties.erb"
     owner "tomcat7"
     group "tomcat7"

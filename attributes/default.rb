@@ -9,15 +9,12 @@ node.default["liferay"]["db_host"] = attribute?('cloud') ? cloud['local_ipv4'] :
 
 node.default["liferay"]["home"] = "/var/lib/liferay"
 
-node.default["liferay"]["deps"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-dependencies-6.1.1-ce-ga2-20120731132656558.zip'
 node.default["liferay"]["war"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-6.1.1-ce-ga2-20120731132656558.war'
 node.default["liferay"]["bundle"] = 'http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.1.1%20GA2/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip'
 
-node.default["liferay"]["tomcat"]["defaults"] = {
-'TOMCAT7_USER' => 'tomcat7',
-'TOMCAT7_GROUP' => 'tomcat7',
-'JAVA_OPTS' => "\"-Djava.awt.headless=true -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dexternal-properties=#{node.liferay.home}/portal-ext.properties -Xmx1536m -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled\""
-}
+# TODO: Maybe append liferay java opt to tomcat from here
+#'JAVA_OPTS' => "\"-Djava.awt.headless=true -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dexternal-properties=#{node.liferay.home}/portal-ext.properties -Xmx1536m -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled\""
+#}
 
 node.default["liferay"]["nginx_site"] = {
  'server_name' => 'localhost',

@@ -5,15 +5,6 @@
 # Copyright 2013, PilinSolutions
 #
 
-# install tomcat native libraries
-package "libtcnative-1" do
-    action :install
-end
-
-package "tomcat7" do
-    action :install
-end
-
 service "tomcat7" do
     supports :status => true, :restart => true
     action :nothing
@@ -26,47 +17,33 @@ end
 ['activation.jar',  'hsql.jar', 'jta.jar', 'jutf7.jar', 'mysql.jar', 'portal-service.jar', 'postgresql.jar',
 'ccpp.jar', 'jms.jar', 'jtds.jar', 'mail.jar', 'persistence.jar', 'portlet.jar', 'support-tomcat.jar'].each do |lib|
 
-    cookbook_file "/var/lib/tomcat7/common/#{lib}" do
-        source "#{lib}"
-        owner 'tomcat7'
-        group 'tomcat7'
+    cookbook_file "#{node.tomcat.base}/common/#{lib}" do
+        source lib
+        owner node.tomcat.user
+        group node.tomcat.group
         action :create_if_missing
         notifies :restart, "service[tomcat7]", :delayed
     end
 end
 
-template "/etc/default/tomcat7" do
-    source "properties.erb"
-    owner "root"
-    variables(
-        :properties => node.liferay.tomcat.defaults
-    )
-    notifies :restart, "service[tomcat7]", :delayed
-end
-
 directory node.liferay.home do
-   owner 'tomcat7'
-   group 'tomcat7'
+   owner node.tomcat.user
+   group node.tomcat.group
 end
 
-directory "/var/lib/tomcat7/webapps/ROOT" do
+directory "#{node.tomcat.webapp_dir}/ROOT" do
     action :delete
     recursive true
-    not_if { File.exists?("/var/lib/tomcat7/webapps/ROOT.war") }
+    not_if { File.exists?("#{node.tomcat.webapp_dir}/ROOT.war") }
 end
 
-remote_file "/var/lib/tomcat7/webapps/ROOT.war" do
+remote_file "#{node.tomcat.webapp_dir}/ROOT.war" do
     source node.liferay.war
-    owner 'tomcat7'
-    group 'tomcat7'
+    owner node.tomcat.user
+    group node.tomcat.group
     action :create_if_missing
     notifies :restart, "service[tomcat7]", :delayed
 end
-
-#remote_file "/tmp/liferay-tomcat-bundle.zip" do
-#   source node.liferay.bundle
-#   action :create_if_missing
-#end
 
 # TODO: default recipe should use hipersonic
 # MySQL
@@ -92,8 +69,8 @@ end
 
 template "#{node.liferay.home}/portal-ext.properties" do
     source "properties.erb"
-    owner "tomcat7"
-    group "tomcat7"
+    owner node.tomcat.user
+    group node.tomcat.group
     variables(
         :properties => node.liferay.portalExtProperties
     )
@@ -102,8 +79,8 @@ end
 
 template "#{node.liferay.home}/system-ext.properties" do
     source "properties.erb"
-    owner "tomcat7"
-    group "tomcat7"
+    owner node.tomcat.user
+    group node.tomcat.group
     variables(
         :properties => node.liferay.systemExtProperties
     )
